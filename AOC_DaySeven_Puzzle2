@@ -1,0 +1,358 @@
+//    O-------O  O-------O  O-------O  O-------O  O-------O
+//0 ->| Amp A |->| Amp B |->| Amp C |->| Amp D |->| Amp E |-> (to thrusters)
+//    O-------O  O-------O  O-------O  O-------O  O-------O
+
+var inputArray1 = [3, 8, 1001, 8, 10, 8, 105, 1, 0, 0, 21, 46, 59, 80, 105, 122, 203, 284, 365, 446, 99999, 3, 9, 102, 3, 9, 9, 1001, 9, 5, 9, 102, 2, 9, 9, 1001, 9, 3, 9, 102, 4, 9, 9, 4, 9, 99, 3, 9, 1002, 9, 2, 9, 101, 2, 9, 9, 4, 9, 99, 3, 9, 101, 5, 9, 9, 1002, 9, 3, 9, 1001, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 99, 3, 9, 1002, 9, 4, 9, 1001, 9, 2, 9, 102, 4, 9, 9, 101, 3, 9, 9, 102, 2, 9, 9, 4, 9, 99, 3, 9, 102, 5, 9, 9, 101, 4, 9, 9, 102, 3, 9, 9, 4, 9, 99, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 1001, 9, 2, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 1001, 9, 2, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 99, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 101, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 99, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 2, 9, 4, 9, 3, 9, 101, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 1001, 9, 2, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 2, 9, 4, 9, 99, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 1001, 9, 2, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 101, 2, 9, 9, 4, 9, 99, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 101, 1, 9, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 1002, 9, 2, 9, 4, 9, 3, 9, 1001, 9, 1, 9, 4, 9, 3, 9, 102, 2, 9, 9, 4, 9, 99];
+
+// Max thruster signal 139629729 (from phase setting sequence 9,8,7,6,5):
+const inputArray3 = [3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5]; //passed
+
+// Max thruster signal 18216 (from phase setting sequence 9,7,8,5,6):
+const inputArray4 = [3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10]; //passed
+
+const sequenceArray2 = ["97856","65789", "98765","78956"]; //test set Puzzle 2
+const sequenceArray = ["56789","56798","56879","56897","56978","56987","57689","57698","57869","57896","57968","57986","58679","58697","58769","58796","58967","58976","59678","59687","59768","59786","59867","59876","65789","65798","65879","65897","65978","65987","67589","67598","67859","67895","67958","67985","68579","68597","68759","68795","68957","68975","69578","69587","69758","69785","69857","69875","75689","75698","75869","75896","75968","75986","76589","76598","76859","76895","76958","76985","78569","78596","78659","78695","78956","78965","79568","79586","79658","79685","79856","79865","85679","85697","85769","85796","85967","85976","86579","86597","86759","86795","86957","86975","87569","87596","87659","87695","87956","87965","89567","89576","89657","89675","89756","89765","95678","95687","95768","95786","95867","95876","96578","96587","96758","96785","96857","96875","97658","97685","97856","97865","98567","98576","98657","98675","98756","98765"];
+
+
+var copiedArray = inputArray1.concat();
+
+
+
+
+var posToReplace = 0;
+var valPositionOne = 0;
+var valPositionTwo = 0;
+var currentPos = 0;
+
+var programNotDone = true;
+var input = 5;
+
+//var output = 0;
+var total = 0;
+
+var parameterOne = "0";
+var parameterTwo = "0";
+var parameterThree = "0";
+var parameterFour = "0";
+
+var ampACurrentPos = 0;
+var ampBCurrentPos = 0;
+var ampCCurrentPos = 0;
+var ampDCurrentPos = 0;
+var ampECurrentPos = 0;
+
+var phaseSettingAmpA = 1;
+var phaseSettingAmpB = 0;
+var phaseSettingAmpC = 4;
+var phaseSettingAmpD = 3;
+var phaseSettingAmpE = 2;
+
+var ampAArray = inputArray1.concat();
+var ampBArray = inputArray1.concat();
+var ampCArray = inputArray1.concat();
+var ampDArray = inputArray1.concat();
+var ampEArray = inputArray1.concat();
+
+var ampAOutPut = 0;
+var ampBOutPut = 0;
+var ampCOutPut = 0;
+var ampDOutPut = 0;
+var ampEOutPut = 0;
+
+
+
+function breakdown(optCode) {
+  //breakdown individual to get optcodes / parameter modes
+  parameterOne = "0";
+  parameterTwo = "0";
+  parameterThree = "0";
+  parameterFour = "0";
+
+  var newoptCode = optCode.toString();
+  //console.log("Current optCode = " + optCode);
+  var newoptCodeLength = newoptCode.length;
+
+  if (newoptCode[newoptCodeLength - 3])
+    parameterOne = newoptCode[newoptCodeLength - 3];
+
+  if (newoptCode[newoptCodeLength - 4])
+    parameterTwo = newoptCode[newoptCodeLength - 4];
+
+  if (newoptCode[newoptCodeLength - 5])
+    parameterThree = newoptCode[newoptCodeLength - 5];
+
+  if (newoptCode[newoptCodeLength - 6])
+    parameterFour = newoptCode[newoptCodeLength - 6];
+
+  if (newoptCodeLength > 1)
+    optCode = newoptCode[newoptCodeLength - 2] + newoptCode[newoptCodeLength - 1];
+  else
+    optCode = "0" + newoptCode[newoptCodeLength - 1];
+
+  return optCode;
+}
+
+function updateParameterModes(currentPos, inputArray, currentOptCode) {
+  //Update parameter modes based on current instruction,  used in eval of instruction set.
+  if (parameterOne == "0")
+    valPositionOne = inputArray[currentPos + 1];
+  else
+    valPositionOne = currentPos + 1;
+
+  if (parameterTwo == "0")
+    valPositionTwo = inputArray[currentPos + 2];
+  else
+    valPositionTwo = currentPos + 2;
+
+  if (currentOptCode == "03") {
+    if (parameterOne == "0")
+      posToReplace = inputArray[currentPos + 1];
+    else
+      posToReplace = currentPos + 1;
+  } else {
+    if (parameterThree == "0")
+      posToReplace = inputArray[currentPos + 3];
+    else
+      posToReplace = currentPos + 3;
+  }
+
+
+}
+
+function intCodeComputer(inputArray,currentPos,input,output) {
+  //Breakdown OptCode / Parameters...
+  var moveToNextThruster = false;
+  var evaluated = false;
+  var optCode = breakdown(inputArray[currentPos]);
+  updateParameterModes(currentPos, inputArray, optCode);
+
+  while (moveToNextThruster !== true || evaluated == true) {
+    //console.log("What is the current position? = " + currentPos);
+
+    switch (optCode) {
+
+      case "01":
+        //console.log("made it to 1 switch");
+        console.log(inputArray[posToReplace] + " " + inputArray[valPositionOne]+ " " + inputArray[valPositionTwo]);
+        inputArray[posToReplace] = inputArray[valPositionOne] + inputArray[valPositionTwo];
+        currentPos = currentPos + 4;
+        break;
+
+      case "02":
+        //console.log("made it to 2 switch");
+        inputArray[posToReplace] = inputArray[valPositionOne] * inputArray[valPositionTwo];
+        currentPos = currentPos + 4;
+        break;
+
+      case "03":
+        //console.log("made it to 3 switch");
+        console.log("Current Input = " + input + " Current Output = " + output);
+        if(currentPos == 0)
+          	inputArray[posToReplace] = input;
+				else
+           	inputArray[posToReplace] = output;
+
+            
+            console.log("Position to replace... " + posToReplace);
+            console.log("Current input = " + inputArray[posToReplace]);
+     
+        currentPos = currentPos + 2;
+        break;
+
+      case "04":
+        console.log("...OUTPUT TIME....");
+        if (parameterOne == "1") {
+          output = inputArray[currentPos + 1];
+          console.log("Current output = " + output);
+        }
+        if (parameterOne == "0") {
+          valPositionOne = inputArray[currentPos + 1];
+          output = inputArray[valPositionOne];
+          console.log("Current output = " + output);
+        }
+        input = output;
+        currentPos = currentPos + 2;
+        moveToNextThruster = true;
+        break;
+
+      case "05":
+        //console.log("made it to 5 switch");
+        //console.log("CurrentPos PRE = "+ currentPos);
+        if (inputArray[valPositionOne] != 0)
+          //if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter...
+          currentPos = inputArray[valPositionTwo];
+        else
+          currentPos = currentPos + 3;
+
+				//console.log("CurrentPos POST = "+ currentPos);
+
+        break;
+
+      case "06":
+        //console.log("made it to 6 switch");
+       // console.log("CurrentPos PRE = "+ currentPos);
+
+        if (inputArray[valPositionOne] == 0)
+          //if the first parameter is zero, it sets the instruction pointer to the value from the second parameter.
+          currentPos = inputArray[valPositionTwo];
+        else
+          currentPos = currentPos + 3;
+          
+         //console.log("CurrentPos POST = "+ currentPos);
+        
+        break;
+
+      case "07":
+        //console.log("made it to 7 switch");
+        if (inputArray[valPositionOne] < inputArray[valPositionTwo])
+          inputArray[posToReplace] = 1;
+        else
+          inputArray[posToReplace] = 0;
+
+        currentPos = currentPos + 4;
+
+        break;
+
+      case "08":
+        //console.log("made it to 8 switch");
+        if (inputArray[valPositionOne] == inputArray[valPositionTwo])
+          inputArray[posToReplace] = 1;
+        else
+          inputArray[posToReplace] = 0;
+
+        currentPos = currentPos + 4;
+        break;
+      case "99":
+        evaluated = true;
+        console.log("Thruster Program finished...");
+        break;
+
+
+      default:
+        console.log("Ava... we have a problem...");
+        break;
+    }
+    console.log(output);
+    if (evaluated ==  true){
+        moveToNextThruster = false;
+        return ([currentPos, output, moveToNextThruster]);
+    }
+
+
+    if (moveToNextThruster == true){ 
+       return ([currentPos, output, moveToNextThruster]);
+    }
+
+
+
+
+		console.log(inputArray);
+    console.log("still going...");
+    //Resetting Parameters to 0s
+
+    //Breakdown OptCode / Parameters...
+    optCode = breakdown(inputArray[currentPos]);
+    updateParameterModes(currentPos, inputArray, optCode);
+  }
+
+}
+
+function reset() {
+    
+    ampACurrentPos = 0;
+    ampBCurrentPos = 0;
+    ampCCurrentPos = 0;
+    ampDCurrentPos = 0;
+    ampECurrentPos = 0;
+
+    ampAArray = inputArray1.concat();
+    ampBArray = inputArray1.concat();
+    ampCArray = inputArray1.concat();
+    ampDArray = inputArray1.concat();
+    ampEArray = inputArray1.concat();
+
+    ampAOutPut = 0;
+    ampBOutPut = 0;
+    ampCOutPut = 0;
+    ampDOutPut = 0;
+    ampEOutPut = 0;
+
+    programNotDone = true;
+
+}
+
+var maxOutput = 0;
+var maxSequence;
+
+for(var x=0; x < sequenceArray.length; x++){
+    console.log("*****ATTEMPT Number " + x + " ************")
+    reset();
+    var phaseSettingAmpA = Number(sequenceArray[x].charAt(0));
+    var phaseSettingAmpB = Number(sequenceArray[x].charAt(1));
+    var phaseSettingAmpC = Number(sequenceArray[x].charAt(2));
+    var phaseSettingAmpD = Number(sequenceArray[x].charAt(3));
+    var phaseSettingAmpE = Number(sequenceArray[x].charAt(4));
+    console.log("CODE= " + phaseSettingAmpA + phaseSettingAmpB + phaseSettingAmpC + phaseSettingAmpD + phaseSettingAmpE );
+    console.log(ampAArray);
+
+        while(programNotDone == true){
+            var tempArray;
+            //AMP A
+            console.log("AMP A ENTER");
+            tempArray = intCodeComputer(ampAArray,ampACurrentPos,phaseSettingAmpA,ampEOutPut);
+
+            ampACurrentPos = tempArray[0];
+            console.log("AmpA CurrentPos = " + ampACurrentPos);
+            phaseSettingAmpA = 99;
+            ampAOutPut = tempArray[1];
+            console.log("AmpA Current OutPut= " + ampAOutPut);
+            
+
+            //AMP B
+            console.log("AMP B ENTER");
+            tempArray = intCodeComputer(ampBArray,ampBCurrentPos,phaseSettingAmpB,ampAOutPut);
+            ampBCurrentPos = tempArray[0];
+            phaseSettingAmpB = 99;
+            ampBOutPut = tempArray[1];
+            
+
+            //AMP C
+            console.log("AMP C ENTER");
+            tempArray = intCodeComputer(ampCArray,ampCCurrentPos,phaseSettingAmpC,ampBOutPut);
+            ampCCurrentPos = tempArray[0];
+            phaseSettingAmpC = 99;
+            ampCOutPut = tempArray[1];
+            
+
+
+            //AMP D
+            console.log("AMP D ENTER");
+            tempArray = intCodeComputer(ampDArray,ampDCurrentPos,phaseSettingAmpD,ampCOutPut);
+            ampDCurrentPos = tempArray[0];
+            phaseSettingAmpD = 99;
+            ampDOutPut = tempArray[1];
+            
+
+
+            //AMP E
+            console.log("AMP E ENTER");
+            tempArray = intCodeComputer(ampEArray,ampECurrentPos,phaseSettingAmpE,ampDOutPut);
+            ampECurrentPos = tempArray[0];
+            phaseSettingAmpE = 99;
+            ampEOutPut = tempArray[1];
+            programNotDone = tempArray[2];
+            
+        }
+
+    if(maxOutput < ampEOutPut){
+        maxOutput = ampEOutPut;
+        maxSequence = sequenceArray[x];
+    }
+
+}
+
+console.log("maxOutput = " + maxOutput);
+console.log("maxSequence = " + maxSequence);
+
+
+console.log("TEST Program finished...");
